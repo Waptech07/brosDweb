@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:brosd_web/widgets/top_navbar.dart';
+import 'package:brosd_web/widgets/main_navbar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -6,7 +8,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(),
+      body: Column(
+        children: [
+          TopNavbar(),
+          MainNavbar(),
+        ],
+      ),
     );
   }
 }
