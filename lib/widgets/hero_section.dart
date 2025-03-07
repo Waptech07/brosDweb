@@ -8,6 +8,16 @@ class HeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      bool isMobile = constraints.maxWidth < 800;
+      return isMobile
+          ? _buildMobileLayout(context)
+          : _buildDesktopLayout(context);
+    });
+  }
+
+  // Desktop layout
+  Widget _buildDesktopLayout(BuildContext context) {
     return Container(
       height: 452,
       padding: EdgeInsets.only(
@@ -128,6 +138,103 @@ class HeroSection extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Mobile layout
+  Widget _buildMobileLayout(BuildContext context) {
+    return Container(
+      height: 700.h,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            top: 300.h,
+            child: Image.asset(
+              'assets/images/hero.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/green-overlay.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 40.w,
+                vertical: 20.h,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 100.h),
+                  Text(
+                    "Artisans Onboarding",
+                    style: GoogleFonts.poppins(
+                      fontSize: 100.sp,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textDark,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  BulletItem(
+                    bulletSize: 70,
+                    text:
+                        "Access to a network of skilled local artisans,\nincluding electricians, plumbers, carpenters, and more.",
+                    textStyle: GoogleFonts.poppins(
+                      fontSize: 44.sp,
+                      color: AppColors.textDark,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 12.h),
+                  BulletItem(
+                    bulletSize: 70,
+                    text:
+                        "Review your artisan profiles and schedule services\nfor home repairs, renovations, or specialized tasks.",
+                    textStyle: GoogleFonts.poppins(
+                      fontSize: 44.sp,
+                      color: AppColors.textDark,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 20.h),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 30.w,
+                        vertical: 12.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.secondaryRed,
+                        borderRadius: BorderRadius.circular(17.r),
+                      ),
+                      child: Text(
+                        'Discover More',
+                        style: GoogleFonts.poppins(
+                          fontSize: 50.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 50.h),
+                  Center(
+                    child: Image.asset(
+                      "assets/images/app-play-store.png",
+                    ),
+                  ),
+                  SizedBox(height: 20.h),
+                ],
+              ),
             ),
           ),
         ],
