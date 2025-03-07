@@ -10,10 +10,14 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      bool isMobile = constraints.maxWidth < 800;
-      return isMobile
-          ? _buildMobileLayout(context)
-          : _buildDesktopLayout(context);
+      // bool isMobile = constraints.maxWidth < 800;
+      if (constraints.maxWidth >= 1200) {
+        return _buildDesktopLayout(context);
+      } else if (constraints.maxWidth >= 800) {
+        return _buildTabletLayout(context);
+      } else {
+        return _buildMobileLayout(context);
+      }
     });
   }
 
@@ -149,10 +153,111 @@ class HeroSection extends StatelessWidget {
     );
   }
 
+  Widget _buildTabletLayout(BuildContext context) {
+    return Container(
+      height: 500,
+      padding: EdgeInsets.only(
+        left: 146.w,
+        bottom: 0,
+        right: 0,
+      ),
+      color: Colors.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // Left section: Text and bullets
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 70.h),
+                Text(
+                  "Artisans Onboarding",
+                  style: GoogleFonts.poppins(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textDark,
+                  ),
+                ).animate().fadeIn(duration: 500.ms).slideX(begin: -0.1),
+                // Bullet Items
+                BulletItem(
+                  text:
+                      "Access to a network of skilled local artisans,\nincluding electricians, plumbers, carpenters, and more.",
+                  textStyle: GoogleFonts.poppins(
+                    fontSize: 20.sp,
+                    color: AppColors.textDark,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                BulletItem(
+                  text:
+                      "Review your artisan profiles and schedule services\nfor home repairs, renovations, or specialized tasks.",
+                  textStyle: GoogleFonts.poppins(
+                    fontSize: 20.sp,
+                    color: AppColors.textDark,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 35.w, vertical: 12.h),
+                    decoration: BoxDecoration(
+                      color: AppColors.secondaryRed,
+                      borderRadius: BorderRadius.circular(17.r),
+                    ),
+                    child: Text(
+                      'Discover More',
+                      style: GoogleFonts.poppins(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ).animate().scaleXY(begin: 0.9).fadeIn(duration: 800.ms),
+                SizedBox(height: 30.h),
+                Image.asset("assets/images/app-play-store.png")
+                    .animate()
+                    .fadeIn(duration: 1.seconds)
+                    .slideY(begin: 0.1),
+              ],
+            ),
+          ),
+          // Right section: Image stack with a reduced green overlay.
+          Expanded(
+            flex: 1,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 150.w,
+                  child: Image.asset(
+                    "assets/images/iPhone.png",
+                  ),
+                ).animate().scaleXY(begin: 0.8).fadeIn(duration: 1.2.seconds),
+                Positioned(
+                  top: 100.h,
+                  left: 30.w,
+                  child: Image.asset(
+                    "assets/images/iPhone2.png",
+                  ),
+                ).animate().scaleXY(begin: 0.8).fadeIn(duration: 1.4.seconds),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   // Mobile layout
   Widget _buildMobileLayout(BuildContext context) {
     return Container(
-      height: 700.h,
+      height: 800.h,
       child: Stack(
         children: [
           Positioned.fill(
@@ -161,15 +266,14 @@ class HeroSection extends StatelessWidget {
               'assets/images/hero.png',
               fit: BoxFit.cover,
             ),
-          ) .animate()
-          .fadeIn(duration: 800.ms),
+          ).animate().fadeIn(duration: 800.ms),
           Positioned.fill(
+            left: -50.w,
             child: Image.asset(
               'assets/images/green-overlay.png',
               fit: BoxFit.cover,
             ),
-          ) .animate()
-          .fadeIn(duration: 1.seconds),
+          ).animate().fadeIn(duration: 1.seconds),
           SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -187,9 +291,7 @@ class HeroSection extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),
-                  ).animate()
-                  .fadeIn(duration: 500.ms)
-                  .slideY(begin: -0.1),
+                  ).animate().fadeIn(duration: 500.ms).slideY(begin: -0.1),
                   SizedBox(height: 16.h),
                   BulletItem(
                     bulletSize: 70,
@@ -200,10 +302,7 @@ class HeroSection extends StatelessWidget {
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),
-                  ).animate()
-                  .fadeIn(duration: 600.ms)
-                  .slideX(begin: -0.1)
-                  ,
+                  ).animate().fadeIn(duration: 600.ms).slideX(begin: -0.1),
                   SizedBox(height: 12.h),
                   BulletItem(
                     bulletSize: 70,
@@ -214,9 +313,7 @@ class HeroSection extends StatelessWidget {
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),
-                  ) .animate()
-                  .fadeIn(duration: 600.ms)
-                  .slideX(begin: -0.1),
+                  ).animate().fadeIn(duration: 600.ms).slideX(begin: -0.1),
                   SizedBox(height: 20.h),
                   GestureDetector(
                     onTap: () {},
@@ -238,16 +335,13 @@ class HeroSection extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ).animate()
-                  .scaleXY(begin: 0.9)
-                  .fadeIn(duration: 800.ms),
+                  ).animate().scaleXY(begin: 0.9).fadeIn(duration: 800.ms),
                   SizedBox(height: 70.h),
                   Center(
                     child: Image.asset(
                       "assets/images/app-play-store.png",
                     ),
-                  ).animate()
-                  .fadeIn(duration: 1.seconds),
+                  ).animate().fadeIn(duration: 1.seconds),
                   SizedBox(height: 20.h),
                 ],
               ),
@@ -291,8 +385,6 @@ class BulletItem extends StatelessWidget {
           ),
         ),
       ],
-    ).animate()
-      .fadeIn()
-      .slideX(begin: -0.1);
+    ).animate().fadeIn().slideX(begin: -0.1);
   }
 }
