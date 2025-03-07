@@ -1,5 +1,6 @@
 import 'package:brosd_web/widgets/service_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/colors.dart';
@@ -74,7 +75,7 @@ class ServiceSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Three breakpoints:
+        // Three breakpoints: desktop (>=1200), tablet (600–1200), mobile (<600)
         bool isDesktop = constraints.maxWidth >= 1200;
         bool isTablet =
             constraints.maxWidth < 1200 && constraints.maxWidth >= 600;
@@ -91,7 +92,7 @@ class ServiceSection extends StatelessWidget {
     );
   }
 
-  // Desktop Layout
+  /// Desktop Layout: 4-column grid with animated cards
   Widget _buildDesktopLayout(BuildContext context) {
     return Container(
       color: AppColors.background,
@@ -126,11 +127,14 @@ class ServiceSection extends StatelessWidget {
               final service = services[index];
               return InkWell(
                 onTap: () {
-                  if (service["title"] == "Construction and Building") {
-                    _showConstructionServices(context);
-                  }
+                  _showServiceDialog(context, service);
                 },
-                child: _buildServiceCard(service, layout: 'desktop'),
+                child: _buildServiceCard(service, layout: 'desktop')
+                    .animate(
+                      delay: (index * 100).ms,
+                    )
+                    .slideY(begin: 0.3, end: 0)
+                    .fadeIn(duration: 600.ms),
               );
             },
           ),
@@ -139,7 +143,7 @@ class ServiceSection extends StatelessWidget {
     );
   }
 
-  // Tablet Layout
+  /// Tablet Layout: 3-column grid with animated cards
   Widget _buildTabletLayout(BuildContext context) {
     return Container(
       color: AppColors.background,
@@ -169,11 +173,14 @@ class ServiceSection extends StatelessWidget {
               final service = services[index];
               return InkWell(
                 onTap: () {
-                  if (service["title"] == "Construction and Building") {
-                    _showConstructionServices(context);
-                  }
+                  _showServiceDialog(context, service);
                 },
-                child: _buildServiceCard(service, layout: 'tablet'),
+                child: _buildServiceCard(service, layout: 'tablet')
+                    .animate(
+                      delay: (index * 100).ms,
+                    )
+                    .slideY(begin: 0.3, end: 0)
+                    .fadeIn(duration: 600.ms),
               );
             },
           ),
@@ -182,7 +189,7 @@ class ServiceSection extends StatelessWidget {
     );
   }
 
-  //Mobile Layout
+  /// Mobile Layout: 2-column grid with animated cards
   Widget _buildMobileLayout(BuildContext context) {
     return Container(
       color: AppColors.background,
@@ -212,11 +219,14 @@ class ServiceSection extends StatelessWidget {
               final service = services[index];
               return InkWell(
                 onTap: () {
-                  if (service["title"] == "Construction and Building") {
-                    _showConstructionServices(context);
-                  }
+                  _showServiceDialog(context, service);
                 },
-                child: _buildServiceCard(service, layout: 'mobile'),
+                child: _buildServiceCard(service, layout: 'mobile')
+                    .animate(
+                      delay: (index * 100).ms,
+                    )
+                    .slideY(begin: 0.3, end: 0)
+                    .fadeIn(duration: 600.ms),
               );
             },
           ),
@@ -225,8 +235,7 @@ class ServiceSection extends StatelessWidget {
     );
   }
 
-  // Reusable Service Card
-
+  /// Reusable Service Card Builder with responsive styling.
   Widget _buildServiceCard(Map<String, String> service,
       {required String layout}) {
     double cardHeight;
@@ -250,7 +259,6 @@ class ServiceSection extends StatelessWidget {
         imageFitHeight = 177.45;
         imageFitWidth = 243.69.w;
         break;
-
       case 'tablet':
         cardHeight = 150;
         cardWidth = double.infinity;
@@ -261,7 +269,6 @@ class ServiceSection extends StatelessWidget {
         imageFitHeight = 200.h;
         imageFitWidth = double.infinity;
         break;
-
       default: // mobile
         cardHeight = 150;
         cardWidth = double.infinity;
@@ -338,12 +345,74 @@ class ServiceSection extends StatelessWidget {
     );
   }
 
-  // Show popup dialog for Construction & Building
-  void _showConstructionServices(BuildContext context) {
+  /// Opens a dialog for the given service.
+  void _showServiceDialog(BuildContext context, Map<String, String> service) {
+    // For "Construction and Building", use a predefined list; for others, pass an empty list.
+    List<Map<String, String>> sub =
+        service["title"] == "Construction and Building"
+            ? [
+                {
+                  "title": "Bricklayers",
+                  "rating": "4",
+                  "image": "assets/images/bricklayer.png"
+                },
+                {
+                  "title": "Carpenters",
+                  "rating": "4",
+                  "image": "assets/images/carpenter.png"
+                },
+                {
+                  "title": "Civil Engineering",
+                  "rating": "4",
+                  "image": "assets/images/civil-engineer.png"
+                },
+                {
+                  "title": "Plumbers",
+                  "rating": "4",
+                  "image": "assets/images/plumber.png",
+                },
+                {
+                  "title": "Welders",
+                  "rating": "4",
+                  "image": "assets/images/welder.png",
+                },
+                {
+                  "title": "Tilers",
+                  "rating": "4",
+                  "image": "assets/images/tilers.png",
+                },
+                {
+                  "title": "Painter",
+                  "rating": "4",
+                  "image": "assets/images/painter.png",
+                },
+                {
+                  "title": "POP Screeding",
+                  "rating": "4",
+                  "image": "assets/images/pop-screeding.png"
+                },
+                {
+                  "title": "Concrete Work",
+                  "rating": "4",
+                  "image": "assets/images/concrete-work.png"
+                },
+                {
+                  "title": "Scaffolding",
+                  "rating": "4",
+                  "image": "assets/images/scaffolding.png"
+                },
+              ]
+            : [];
     showDialog(
       context: context,
       barrierDismissible: true,
-      builder: (_) => const ServiceDialog(),
+      builder: (_) => ServiceDialog(
+        title: service["title"]!,
+        subServices: sub,
+      )
+          .animate()
+          .fadeIn(duration: 800.ms)
+          .slide(begin: const Offset(0, 0.2), end: Offset.zero),
     );
   }
 }

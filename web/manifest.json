@@ -1,11 +1,11 @@
 {
-    "name": "brosd_web",
-    "short_name": "brosd_web",
+    "name": "Bros D",
+    "short_name": "Bros D",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Bros D Web App",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

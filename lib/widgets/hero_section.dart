@@ -1,5 +1,6 @@
 import 'package:brosd_web/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -44,7 +45,7 @@ class HeroSection extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                     color: AppColors.textDark,
                   ),
-                ),
+                ).animate().fadeIn(duration: 500.ms).slideX(begin: -0.1),
 
                 // using the BulletItem widget
                 BulletItem(
@@ -89,9 +90,12 @@ class HeroSection extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                ).animate().scaleXY(begin: 0.9).fadeIn(duration: 800.ms),
                 SizedBox(height: 41.89.h),
-                Image.asset("assets/images/app-play-store.png", width: 363.w),
+                Image.asset("assets/images/app-play-store.png", width: 363.w)
+                    .animate()
+                    .fadeIn(duration: 1.seconds)
+                    .slideY(begin: 0.1),
               ],
             ),
           ),
@@ -109,7 +113,7 @@ class HeroSection extends StatelessWidget {
                     // height: 326.h,
                     width: 582.24.w,
                   ),
-                ),
+                ).animate().fadeIn(duration: 800.ms).slideX(begin: 0.2),
                 Positioned(
                   right: 0,
                   top: 118,
@@ -118,7 +122,7 @@ class HeroSection extends StatelessWidget {
                     fit: BoxFit.cover,
                     // height: 326.h,
                   ),
-                ),
+                ).animate().fadeIn(duration: 1.seconds),
                 Positioned(
                   top: 0,
                   left: 180.w,
@@ -128,7 +132,7 @@ class HeroSection extends StatelessWidget {
                     // height: 350,
                     // width: 161.23.w,
                   ),
-                ),
+                ).animate().scaleXY(begin: 0.8).fadeIn(duration: 1.2.seconds),
                 Positioned(
                   top: 116.73,
                   left: 43.87.w,
@@ -136,7 +140,7 @@ class HeroSection extends StatelessWidget {
                     "assets/images/iPhone2.png",
                     // height: 305.26,
                   ),
-                ),
+                ).animate().scaleXY(begin: 0.8).fadeIn(duration: 1.4.seconds),
               ],
             ),
           ),
@@ -179,7 +183,7 @@ class HeroSection extends StatelessWidget {
                     style: GoogleFonts.poppins(
                       fontSize: 100.sp,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.textDark,
+                      color: Colors.white,
                     ),
                   ),
                   SizedBox(height: 16.h),
@@ -189,7 +193,7 @@ class HeroSection extends StatelessWidget {
                         "Access to a network of skilled local artisans,\nincluding electricians, plumbers, carpenters, and more.",
                     textStyle: GoogleFonts.poppins(
                       fontSize: 44.sp,
-                      color: AppColors.textDark,
+                      color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -200,7 +204,7 @@ class HeroSection extends StatelessWidget {
                         "Review your artisan profiles and schedule services\nfor home repairs, renovations, or specialized tasks.",
                     textStyle: GoogleFonts.poppins(
                       fontSize: 44.sp,
-                      color: AppColors.textDark,
+                      color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -226,7 +230,7 @@ class HeroSection extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 50.h),
+                  SizedBox(height: 70.h),
                   Center(
                     child: Image.asset(
                       "assets/images/app-play-store.png",
@@ -262,7 +266,9 @@ class BulletItem extends StatelessWidget {
       children: [
         Text(
           "•",
-          style: TextStyle(fontSize: bulletSize.sp),
+          style: TextStyle(
+            fontSize: bulletSize.sp,
+          ),
         ),
         SizedBox(width: 8.w),
         Container(

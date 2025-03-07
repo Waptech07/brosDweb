@@ -4,66 +4,18 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utils/colors.dart';
 
 class ServiceDialog extends StatelessWidget {
-  const ServiceDialog({Key? key}) : super(key: key);
+  final String title;
+  final List<Map<String, String>> subServices;
 
-  // List of sub-services under Construction and Building
-  final List<Map<String, String>> subServices = const [
-    {
-      "title": "Bricklayers",
-      "rating": "4",
-      "image": "assets/images/bricklayer.png"
-    },
-    {
-      "title": "Carpenters",
-      "rating": "4",
-      "image": "assets/images/carpenter.png"
-    },
-    {
-      "title": "Civil Engineering",
-      "rating": "4",
-      "image": "assets/images/civil-engineer.png"
-    },
-    {
-      "title": "Plumbers",
-      "rating": "4",
-      "image": "assets/images/plumber.png",
-    },
-    {
-      "title": "Welders",
-      "rating": "4",
-      "image": "assets/images/welder.png",
-    },
-    {
-      "title": "Tilers",
-      "rating": "4",
-      "image": "assets/images/tilers.png",
-    },
-    {
-      "title": "Painter",
-      "rating": "4",
-      "image": "assets/images/painter.png",
-    },
-    {
-      "title": "POP Screeding",
-      "rating": "4",
-      "image": "assets/images/pop-screeding.png"
-    },
-    {
-      "title": "Concrete Work",
-      "rating": "4",
-      "image": "assets/images/concrete-work.png"
-    },
-    {
-      "title": "Scaffolding",
-      "rating": "4",
-      "image": "assets/images/scaffolding.png"
-    },
-  ];
+  const ServiceDialog({
+    Key? key,
+    required this.title,
+    required this.subServices,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final bool isMobile = MediaQuery.of(context).size.width < 800;
-
     double dialogWidth =
         isMobile ? MediaQuery.of(context).size.width * 0.95 : 750.69.w;
     double dialogHeight =
@@ -89,7 +41,7 @@ class ServiceDialog extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Construction and Building",
+                      title,
                       style: GoogleFonts.monda(
                         fontSize: isMobile ? 50.sp : 24.sp,
                         fontWeight: FontWeight.bold,
@@ -98,24 +50,36 @@ class ServiceDialog extends StatelessWidget {
                     ),
                     SizedBox(height: 20.h),
                     Expanded(
-                      child: GridView.builder(
-                        itemCount: subServices.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: isMobile ? 2 : 3,
-                          mainAxisSpacing: 20.h,
-                          crossAxisSpacing: 30.w,
-                          childAspectRatio: 0.7,
-                        ),
-                        itemBuilder: (context, index) {
-                          final subService = subServices[index];
-                          return _buildSubServiceCard(subService, isMobile);
-                        },
-                      ),
+                      child: subServices.isNotEmpty
+                          ? GridView.builder(
+                              itemCount: subServices.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: isMobile ? 2 : 3,
+                                mainAxisSpacing: 20.h,
+                                crossAxisSpacing: 30.w,
+                                childAspectRatio: 0.7,
+                              ),
+                              itemBuilder: (context, index) {
+                                final subService = subServices[index];
+                                return _buildSubServiceCard(subService, isMobile);
+                              },
+                            )
+                          : Center(
+                              child: Text(
+                                "Coming Soon",
+                                style: GoogleFonts.monda(
+                                  fontSize: isMobile ? 40.sp : 24.sp,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                     ),
                   ],
                 ),
               ),
-              // Close Button in top-right
+              // Close Button
               Positioned(
                 top: 10.h,
                 right: 10.w,
@@ -135,7 +99,7 @@ class ServiceDialog extends StatelessWidget {
     );
   }
 
-  // Builds each sub-service card in the grid.
+  /// Builds each sub-service card in the grid.
   Widget _buildSubServiceCard(Map<String, String> subService, bool isMobile) {
     return Stack(
       clipBehavior: Clip.none,
@@ -144,7 +108,7 @@ class ServiceDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              height: isMobile ? 220.h : 157.86.h,
+              height: isMobile ? 220 : 157.86,
               width: isMobile ? double.infinity : 216.8.w,
               decoration: BoxDecoration(
                 border: Border.all(
