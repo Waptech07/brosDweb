@@ -76,7 +76,7 @@ class DrawerWidget extends StatelessWidget {
                           child: Text(
                             'Download Now',
                             style: GoogleFonts.monda(
-                              fontSize: 70.sp,
+                              fontSize: 50.sp,
                               fontWeight: FontWeight.w700,
                               color: AppColors.secondaryRed,
                             ),
