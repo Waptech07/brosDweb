@@ -11,7 +11,7 @@ class FooterSection extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth >= 1200) {
         return _buildDesktopLayout(context);
-      } else if (constraints.maxWidth >= 600) {
+      } else if (constraints.maxWidth >= 800) {
         return _buildTabletLayout(context);
       } else {
         return _buildMobileLayout(context);
@@ -38,7 +38,7 @@ class FooterSection extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 29.w, top: 75.h),
+                  padding: EdgeInsets.only(left: 29.w, top: 75.h,),
                   child: _buildFastLinks(false),
                 ),
               ),
