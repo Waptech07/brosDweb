@@ -310,8 +310,8 @@ class FooterSection extends StatelessWidget {
           title,
           style: GoogleFonts.poppins(
             color: Colors.white,
-            fontSize: isMobile ? 40.sp : 22.sp,
-            fontWeight: isMobile ? FontWeight.w700 : FontWeight.w400,
+            fontSize: 22.sp,
+            fontWeight: FontWeight.w400,
           ),
         ),
       ),

@@ -161,13 +161,15 @@ class HeroSection extends StatelessWidget {
               'assets/images/hero.png',
               fit: BoxFit.cover,
             ),
-          ),
+          ) .animate()
+          .fadeIn(duration: 800.ms),
           Positioned.fill(
             child: Image.asset(
               'assets/images/green-overlay.png',
               fit: BoxFit.cover,
             ),
-          ),
+          ) .animate()
+          .fadeIn(duration: 1.seconds),
           SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -185,7 +187,9 @@ class HeroSection extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),
-                  ),
+                  ).animate()
+                  .fadeIn(duration: 500.ms)
+                  .slideY(begin: -0.1),
                   SizedBox(height: 16.h),
                   BulletItem(
                     bulletSize: 70,
@@ -196,7 +200,10 @@ class HeroSection extends StatelessWidget {
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),
-                  ),
+                  ).animate()
+                  .fadeIn(duration: 600.ms)
+                  .slideX(begin: -0.1)
+                  ,
                   SizedBox(height: 12.h),
                   BulletItem(
                     bulletSize: 70,
@@ -207,7 +214,9 @@ class HeroSection extends StatelessWidget {
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),
-                  ),
+                  ) .animate()
+                  .fadeIn(duration: 600.ms)
+                  .slideX(begin: -0.1),
                   SizedBox(height: 20.h),
                   GestureDetector(
                     onTap: () {},
@@ -229,13 +238,16 @@ class HeroSection extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
+                  ).animate()
+                  .scaleXY(begin: 0.9)
+                  .fadeIn(duration: 800.ms),
                   SizedBox(height: 70.h),
                   Center(
                     child: Image.asset(
                       "assets/images/app-play-store.png",
                     ),
-                  ),
+                  ).animate()
+                  .fadeIn(duration: 1.seconds),
                   SizedBox(height: 20.h),
                 ],
               ),
@@ -279,6 +291,8 @@ class BulletItem extends StatelessWidget {
           ),
         ),
       ],
-    );
+    ).animate()
+      .fadeIn()
+      .slideX(begin: -0.1);
   }
 }

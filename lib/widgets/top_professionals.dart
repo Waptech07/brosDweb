@@ -1,10 +1,19 @@
-import 'package:brosd_web/utils/colors.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../utils/colors.dart';
 
-class TopProfessionals extends StatelessWidget {
-  TopProfessionals({super.key});
+class TopProfessionals extends StatefulWidget {
+  const TopProfessionals({super.key});
+
+  @override
+  State<TopProfessionals> createState() => _TopProfessionalsState();
+}
+
+class _TopProfessionalsState extends State<TopProfessionals> {
+  final ScrollController _scrollController = ScrollController();
 
   final List<Map<String, String>> professionals = [
     {
@@ -44,6 +53,44 @@ class TopProfessionals extends StatelessWidget {
     },
   ];
 
+  Timer? _autoScrollTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Start auto scroll after first frame if not mobile.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (MediaQuery.of(context).size.width >= 800) {
+        _startAutoScroll();
+      }
+    });
+  }
+
+  void _startAutoScroll() {
+    _autoScrollTimer = Timer.periodic(Duration(seconds: 3), (_) {
+      if (_scrollController.hasClients) {
+        double maxScroll = _scrollController.position.maxScrollExtent;
+        double currentScroll = _scrollController.position.pixels;
+        double nextScroll = currentScroll + 100;
+        if (nextScroll > maxScroll) {
+          nextScroll = 0;
+        }
+        _scrollController.animateTo(
+          nextScroll,
+          duration: Duration(seconds: 1),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _autoScrollTimer?.cancel();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -54,7 +101,7 @@ class TopProfessionals extends StatelessWidget {
     });
   }
 
-  // Desktop layout
+  /// Desktop layout: Horizontal scrolling row with animated cards.
   Widget _buildDesktopLayout(BuildContext context) {
     return Container(
       color: Colors.white,
@@ -77,14 +124,18 @@ class TopProfessionals extends StatelessWidget {
           ),
           SizedBox(height: 20.h),
           SingleChildScrollView(
+            controller: _scrollController,
             physics: AlwaysScrollableScrollPhysics(),
             scrollDirection: Axis.horizontal,
             clipBehavior: Clip.none,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: professionals
-                  .map((pro) => _buildProfessionalCardDesktop(pro))
-                  .toList(),
+              children: professionals.map((pro) {
+                int index = professionals.indexOf(pro);
+                return _buildProfessionalCardDesktop(pro)
+                    .animate(delay: (index * 100).ms)
+                    .slideY(begin: 0.3, end: 0)
+                    .fadeIn(duration: 600.ms);
+              }).toList(),
             ),
           ),
         ],
@@ -92,14 +143,11 @@ class TopProfessionals extends StatelessWidget {
     );
   }
 
-  // Mobile layout
+  /// Mobile layout: Grid of cards with animated appearance.
   Widget _buildMobileLayout(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.symmetric(
-        horizontal: 100.w,
-        vertical: 50.h,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 100.w, vertical: 50.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -114,7 +162,7 @@ class TopProfessionals extends StatelessWidget {
           SizedBox(height: 20.h),
           GridView.builder(
             shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             itemCount: professionals.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -123,7 +171,10 @@ class TopProfessionals extends StatelessWidget {
               childAspectRatio: 0.7,
             ),
             itemBuilder: (context, index) {
-              return _buildProfessionalCardMobile(professionals[index]);
+              return _buildProfessionalCardMobile(professionals[index])
+                  .animate(delay: (index * 100).ms)
+                  .slideY(begin: 0.3, end: 0)
+                  .fadeIn(duration: 600.ms);
             },
           ),
         ],
@@ -131,7 +182,7 @@ class TopProfessionals extends StatelessWidget {
     );
   }
 
-  // Professional card for Desktop layout.
+  /// Professional card for Desktop layout.
   Widget _buildProfessionalCardDesktop(Map<String, String> pro) {
     return Container(
       width: 205.w,
@@ -144,7 +195,7 @@ class TopProfessionals extends StatelessWidget {
         bottom: 29.39.h,
       ),
       decoration: BoxDecoration(
-        color: Color(0xFFEEE7E7),
+        color: const Color(0xFFEEE7E7),
         borderRadius: BorderRadius.circular(10.r),
         boxShadow: [
           BoxShadow(
@@ -159,7 +210,6 @@ class TopProfessionals extends StatelessWidget {
         children: [
           Image.asset(
             pro['image']!,
-            // height: 123,
             width: 114.w,
           ),
           SizedBox(height: 21.h),
@@ -176,7 +226,7 @@ class TopProfessionals extends StatelessWidget {
             style: GoogleFonts.monda(
               fontWeight: FontWeight.w400,
               fontSize: 10.sp,
-              color: Color(0xFF808080),
+              color: const Color(0xFF808080),
             ),
           ),
           SizedBox(height: 10.49.h),
@@ -195,7 +245,7 @@ class TopProfessionals extends StatelessWidget {
     );
   }
 
-  // Professional card for Mobile layout.
+  /// Professional card for Mobile layout.
   Widget _buildProfessionalCardMobile(Map<String, String> pro) {
     return Container(
       height: 600.h,
@@ -215,9 +265,7 @@ class TopProfessionals extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            pro['image']!,
-          ),
+          Image.asset(pro['image']!),
           SizedBox(height: 10.h),
           Text(
             pro["name"]!,
@@ -235,7 +283,6 @@ class TopProfessionals extends StatelessWidget {
               color: const Color(0xFF808080),
             ),
           ),
-          // SizedBox(height: 20.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(5, (index) {

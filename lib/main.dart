@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (_, child) {
           return MaterialApp(
-            title: 'brosD',
+            title: 'Bros D',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               visualDensity: VisualDensity.adaptivePlatformDensity,
