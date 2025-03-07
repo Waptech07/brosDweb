@@ -1,3 +1,4 @@
+import 'package:brosd_web/widgets/service_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -104,7 +105,15 @@ class ServiceSection extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) {
                   final service = services[index];
-                  return _buildServiceCard(service);
+                  return InkWell(
+                      onTap: () {
+                        if (service["title"] == "Construction and Building") {
+                          _showConstructionServices(context);
+                        } else {
+                          // nothing yet
+                        }
+                      },
+                      child: _buildServiceCard(service));
                 },
               ),
             ],
@@ -174,6 +183,15 @@ class ServiceSection extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  /// Shows the construction jobs in a popup dialog
+  void _showConstructionServices(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (_) => const ServiceDialog(),
     );
   }
 }
