@@ -3,11 +3,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/colors.dart';
 
-class MainNavbar extends StatelessWidget {
+class MainNavbar extends StatefulWidget {
   const MainNavbar({super.key});
 
   @override
+  State<MainNavbar> createState() => _MainNavbarState();
+}
+
+class _MainNavbarState extends State<MainNavbar> {
+  @override
   Widget build(BuildContext context) {
+    final bool isMobile = MediaQuery.of(context).size.width < 800;
+
     return Container(
       height: 81.h,
       padding: EdgeInsets.symmetric(horizontal: 79.w),
@@ -21,40 +28,48 @@ class MainNavbar extends StatelessWidget {
             height: 44.42.h,
           ),
 
-          // nav items Menu
-          Row(
-            children: [
-              _buildNavDropdown("Home", false),
-              _buildNavDropdown("Product", true),
-              _buildNavDropdown("Company", true),
-              _buildNavDropdown("Help", true),
-            ],
-          ),
+          if (!isMobile)
+            Row(
+              children: [
+                _buildNavDropdown("Home", false),
+                _buildNavDropdown("Product", true),
+                _buildNavDropdown("Company", true),
+                _buildNavDropdown("Help", true),
+              ],
+            )
+          else
+            IconButton(
+              icon: Icon(Icons.menu, color: Colors.white),
+              onPressed: () {
+                Scaffold.of(context).openEndDrawer();
+              },
+            ),
 
-          // Download Button
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              padding: EdgeInsets.only(
-                top: 6.h,
-                bottom: 10.24.h,
-                right: 10.w,
-                left: 9.7.w,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15.r),
-              ),
-              child: Text(
-                'Download Now',
-                style: GoogleFonts.monda(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.secondaryRed,
+          if (!isMobile)
+            // Download Button
+            InkWell(
+              onTap: () {},
+              child: Container(
+                padding: EdgeInsets.only(
+                  top: 6.h,
+                  bottom: 10.24.h,
+                  right: 10.w,
+                  left: 9.7.w,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.r),
+                ),
+                child: Text(
+                  'Download Now',
+                  style: GoogleFonts.monda(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.secondaryRed,
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );
