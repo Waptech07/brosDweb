@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:brosd_web/widgets/top_navbar.dart';
 import 'package:brosd_web/widgets/main_navbar.dart';
 import 'package:brosd_web/widgets/drawer_widget.dart';
+import 'package:brosd_web/widgets/hero_section.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,6 +16,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             TopNavbar(),
             MainNavbar(),
+            HeroSection(),
           ],
         ),
       ),
