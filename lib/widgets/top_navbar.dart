@@ -106,40 +106,6 @@ class TopNavbar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          width: double.infinity,
-          height: 55.h,
-          padding: EdgeInsets.symmetric(
-            horizontal: 40.w,
-          ),
-          child: TextField(
-            decoration: InputDecoration(
-              suffixIcon: Image.asset(
-                'assets/images/search-icon.png',
-              ),
-              enabled: true,
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.62.r),
-                borderSide: BorderSide(
-                  width: 0.84.w,
-                  color: const Color(0xFFC8C4C4),
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.62.r),
-                borderSide: BorderSide(
-                  width: 0.84.w,
-                  color: AppColors.primaryGreen,
-                ),
-              ),
-              filled: true,
-              fillColor: const Color(0xFFF1F1F1),
-            ),
-          ),
-        ),
-        SizedBox(height: 20.h),
-        Container(
           padding: EdgeInsets.symmetric(
             horizontal: 30.w,
           ),
@@ -181,6 +147,40 @@ class TopNavbar extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+        ),
+        SizedBox(height: 20.h),
+        Container(
+          width: double.infinity,
+          height: 55.h,
+          padding: EdgeInsets.symmetric(
+            horizontal: 40.w,
+          ),
+          child: TextField(
+            decoration: InputDecoration(
+              suffixIcon: Image.asset(
+                'assets/images/search-icon.png',
+              ),
+              enabled: true,
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.62.r),
+                borderSide: BorderSide(
+                  width: 0.84.w,
+                  color: const Color(0xFFC8C4C4),
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.62.r),
+                borderSide: BorderSide(
+                  width: 0.84.w,
+                  color: AppColors.primaryGreen,
+                ),
+              ),
+              filled: true,
+              fillColor: const Color(0xFFF1F1F1),
+            ),
           ),
         ),
       ],
