@@ -35,7 +35,7 @@ class FooterSection extends StatelessWidget {
                 flex: 1,
                 child: Padding(
                   padding: EdgeInsets.only(left: 29.w, top: 75.h),
-                  child: _buildFastLinks(),
+                  child: _buildFastLinks(true),
                 ),
               ),
             ],
@@ -60,7 +60,7 @@ class FooterSection extends StatelessWidget {
           SizedBox(height: 20.h),
           _buildMapSection(),
           SizedBox(height: 20.h),
-          _buildFastLinks(),
+          _buildFastLinks(true),
           SizedBox(height: 30.h),
           _buildBottomRow(context, isMobile: true),
         ],
@@ -73,7 +73,7 @@ class FooterSection extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: isMobile
-          ? EdgeInsets.all(20.w)
+          ? EdgeInsets.all(40.w)
           : EdgeInsets.only(
               top: 23.h,
               right: 34.05.w,
@@ -91,7 +91,7 @@ class FooterSection extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                     color: Colors.white,
-                    fontSize: 30.sp,
+                    fontSize: 40.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -123,14 +123,14 @@ class FooterSection extends StatelessWidget {
 
   // list of social icon widgets.
   List<Widget> _buildSocialIcons(bool isMobile) {
-    double iconSize = isMobile ? 24.w : 22.w;
-    double spacing = isMobile ? 10.w : 15.w;
+    double iconSize = isMobile ? 40.w : 22.w;
+    double spacing = isMobile ? 30.w : 15.w;
     return [
       Text(
         "We're social: ",
         style: GoogleFonts.poppins(
           color: Colors.white,
-          fontSize: isMobile ? 18.sp : 22.sp,
+          fontSize: isMobile ? 40.sp : 22.sp,
           fontWeight: FontWeight.w500,
         ),
       ),
@@ -234,7 +234,7 @@ class FooterSection extends StatelessWidget {
       width: isMobile ? double.infinity : 343.w,
       child: TextField(
         style: GoogleFonts.poppins(
-          fontSize: 13.sp,
+          fontSize: isMobile ? 35.sp : 13.sp,
           color: Colors.white,
         ),
         decoration: InputDecoration(
@@ -242,7 +242,7 @@ class FooterSection extends StatelessWidget {
           hintStyle: GoogleFonts.poppins(
             color: const Color(0xFF898A8D),
             fontWeight: FontWeight.w400,
-            fontSize: 16.sp,
+            fontSize: isMobile ? 40.sp : 16.sp,
           ),
           filled: true,
           fillColor: Colors.white,
@@ -268,7 +268,7 @@ class FooterSection extends StatelessWidget {
   }
 
   // Fast Links section.
-  Widget _buildFastLinks() {
+  Widget _buildFastLinks(bool isMobile) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -281,11 +281,11 @@ class FooterSection extends StatelessWidget {
           ),
         ),
         SizedBox(height: 20.h),
-        _linkItem("Careers"),
-        _linkItem("Contact Us"),
-        _linkItem("WebApp"),
-        _linkItem("FAQs"),
-        _linkItem("About Us"),
+        _linkItem("Careers", true),
+        _linkItem("Contact Us", true),
+        _linkItem("WebApp", true),
+        _linkItem("FAQs", true),
+        _linkItem("About Us", true),
         InkWell(
           onTap: () {},
           child: Text(
@@ -301,17 +301,17 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _linkItem(String title) {
+  Widget _linkItem(String title, bool isMobile) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 8.h),
+      padding: EdgeInsets.only(bottom: isMobile ? 10.h : 8.h),
       child: InkWell(
         onTap: () {},
         child: Text(
           title,
           style: GoogleFonts.poppins(
             color: Colors.white,
-            fontSize: 22.sp,
-            fontWeight: FontWeight.w400,
+            fontSize: isMobile ? 40.sp : 22.sp,
+            fontWeight: isMobile ? FontWeight.w700 : FontWeight.w400,
           ),
         ),
       ),
