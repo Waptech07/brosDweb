@@ -53,7 +53,7 @@ class NavDropdown extends StatelessWidget {
         Text(
           title,
           style: GoogleFonts.monda(
-            fontSize: 20.62.sp,
+            fontSize: 70.62.sp,
             fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
@@ -63,7 +63,7 @@ class NavDropdown extends StatelessWidget {
           Icon(
             Icons.arrow_drop_down_rounded,
             color: Colors.white,
-            size: 20.62.sp,
+            size: 70.62.sp,
           ),
         ],
       ],
