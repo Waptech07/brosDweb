@@ -35,7 +35,7 @@ class FooterSection extends StatelessWidget {
                 flex: 1,
                 child: Padding(
                   padding: EdgeInsets.only(left: 29.w, top: 75.h),
-                  child: _buildFastLinks(true),
+                  child: _buildFastLinks(false),
                 ),
               ),
             ],
@@ -180,7 +180,7 @@ class FooterSection extends StatelessWidget {
           "Speak to our Team",
           style: GoogleFonts.poppins(
             color: Colors.white,
-            fontSize: 32.sp,
+            fontSize: isMobile ? 50.sp : 32.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -276,23 +276,23 @@ class FooterSection extends StatelessWidget {
           "Fast Links",
           style: GoogleFonts.poppins(
             color: Colors.white,
-            fontSize: 22.sp,
+            fontSize: isMobile ? 40.sp : 22.sp,
             fontWeight: FontWeight.w800,
           ),
         ),
         SizedBox(height: 20.h),
-        _linkItem("Careers", true),
-        _linkItem("Contact Us", true),
-        _linkItem("WebApp", true),
-        _linkItem("FAQs", true),
-        _linkItem("About Us", true),
+        _linkItem("Careers", isMobile),
+        _linkItem("Contact Us", isMobile),
+        _linkItem("WebApp", isMobile),
+        _linkItem("FAQs", isMobile),
+        _linkItem("About Us", isMobile),
         InkWell(
           onTap: () {},
           child: Text(
             "Download App",
             style: GoogleFonts.poppins(
               color: Colors.white,
-              fontSize: 22.sp,
+              fontSize: isMobile ? 40.sp : 22.sp,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -310,7 +310,7 @@ class FooterSection extends StatelessWidget {
           title,
           style: GoogleFonts.poppins(
             color: Colors.white,
-            fontSize: 22.sp,
+            fontSize: isMobile ? 40.sp : 22.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
