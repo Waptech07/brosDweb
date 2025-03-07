@@ -9,14 +9,17 @@ class FooterSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      bool isMobile = constraints.maxWidth < 800;
-      return isMobile
-          ? _buildMobileLayout(context)
-          : _buildDesktopLayout(context);
+      if (constraints.maxWidth >= 1200) {
+        return _buildDesktopLayout(context);
+      } else if (constraints.maxWidth >= 600) {
+        return _buildTabletLayout(context);
+      } else {
+        return _buildMobileLayout(context);
+      }
     });
   }
 
-  // Desktop Footer Layout
+  // Desktop Layout
   Widget _buildDesktopLayout(BuildContext context) {
     return Container(
       color: Colors.black,
@@ -25,12 +28,13 @@ class FooterSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Top Row
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(flex: 2, child: _buildContactForm(false)),
-              Expanded(flex: 3, child: _buildMapSection()),
+              Expanded(flex: 2, child: _buildContactForm(isMobile: false)),
+              Expanded(flex: 3, child: _buildMapSection(double.infinity)),
               Expanded(
                 flex: 1,
                 child: Padding(
@@ -47,7 +51,33 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  /// Mobile Footer Layout
+  // Tablet Layout
+  Widget _buildTabletLayout(BuildContext context) {
+    return Container(
+      color: Colors.black,
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 40.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Two-column row for Contact Form and Map
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(child: _buildContactForm(isMobile: false)),
+              Expanded(child: _buildMapSection(double.infinity)),
+            ],
+          ),
+          SizedBox(height: 30.h),
+          _buildFastLinks(false),
+          SizedBox(height: 30.h),
+          _buildBottomRow(context, isMobile: false),
+        ],
+      ),
+    );
+  }
+
+  // Mobile Layout
   Widget _buildMobileLayout(BuildContext context) {
     return Container(
       color: Colors.black,
@@ -56,9 +86,9 @@ class FooterSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildContactForm(true),
+          _buildContactForm(isMobile: true),
           SizedBox(height: 20.h),
-          _buildMapSection(),
+          _buildMapSection(double.infinity),
           SizedBox(height: 20.h),
           _buildFastLinks(true),
           SizedBox(height: 30.h),
@@ -68,18 +98,14 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  // Bottom row for policies and social icons.
+  /// Bottom row for policies and social icons.
   Widget _buildBottomRow(BuildContext context, {required bool isMobile}) {
     return Container(
       width: double.infinity,
       padding: isMobile
           ? EdgeInsets.all(40.w)
           : EdgeInsets.only(
-              top: 23.h,
-              right: 34.05.w,
-              bottom: 23.h,
-              left: 34.05.w,
-            ),
+              top: 23.h, right: 34.05.w, bottom: 23.h, left: 34.05.w),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.white, width: 1),
       ),
@@ -91,7 +117,7 @@ class FooterSection extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                     color: Colors.white,
-                    fontSize: 40.sp,
+                    fontSize: 50.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -121,16 +147,16 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  // list of social icon widgets.
+  /// Builds social icon widgets.
   List<Widget> _buildSocialIcons(bool isMobile) {
-    double iconSize = isMobile ? 40.w : 22.w;
+    double iconSize = isMobile ? 50.w : 22.w;
     double spacing = isMobile ? 30.w : 15.w;
     return [
       Text(
         "We're social: ",
         style: GoogleFonts.poppins(
           color: Colors.white,
-          fontSize: isMobile ? 40.sp : 22.sp,
+          fontSize: isMobile ? 50.sp : 22.sp,
           fontWeight: FontWeight.w500,
         ),
       ),
@@ -167,20 +193,20 @@ class FooterSection extends StatelessWidget {
     ];
   }
 
-  // Left section - contact form.
-  Widget _buildContactForm(bool isMobile) {
+  /// Contact Form Section.
+  Widget _buildContactForm({required bool isMobile}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Image.asset(
           'assets/images/brosd-logo.png',
-          width: 147.w,
+          width: isMobile ? 200.w : 147.w,
         ),
         Text(
           "Speak to our Team",
           style: GoogleFonts.poppins(
             color: Colors.white,
-            fontSize: isMobile ? 50.sp : 32.sp,
+            fontSize: isMobile ? 60.sp : 32.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -194,11 +220,11 @@ class FooterSection extends StatelessWidget {
         _customTextField("Phone Number", isMobile),
         SizedBox(height: 17.h),
         SizedBox(
-          width: 111.w,
+          width: isMobile ? 150.w : 111.w,
           child: GestureDetector(
             onTap: () {},
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 8.h),
+              padding: EdgeInsets.symmetric(vertical: isMobile ? 12.h : 8.h),
               decoration: BoxDecoration(
                 color: AppColors.secondaryRed,
                 borderRadius: BorderRadius.circular(10.r),
@@ -216,7 +242,7 @@ class FooterSection extends StatelessWidget {
                 "Submit",
                 style: GoogleFonts.monda(
                   color: Colors.white,
-                  fontSize: 16.sp,
+                  fontSize: isMobile ? 20.sp : 16.sp,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -227,10 +253,10 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  // Custom text field.
+  /// Custom TextField.
   Widget _customTextField(String hint, bool isMobile) {
     return SizedBox(
-      height: isMobile ? 36.h : 56.h,
+      height: isMobile ? 70.h : 56.h,
       width: isMobile ? double.infinity : 343.w,
       child: TextField(
         style: GoogleFonts.poppins(
@@ -256,18 +282,19 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  // Middle section - map.
-  Widget _buildMapSection() {
+  /// Map Section.
+  Widget _buildMapSection(double? width) {
     return Container(
       padding: EdgeInsets.only(top: 11.h),
       child: Image.asset(
         "assets/images/map.png",
         fit: BoxFit.contain,
+        width: width,
       ),
     );
   }
 
-  // Fast Links section.
+  /// Fast Links Section.
   Widget _buildFastLinks(bool isMobile) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,7 +303,7 @@ class FooterSection extends StatelessWidget {
           "Fast Links",
           style: GoogleFonts.poppins(
             color: Colors.white,
-            fontSize: isMobile ? 40.sp : 22.sp,
+            fontSize: isMobile ? 50.sp : 22.sp,
             fontWeight: FontWeight.w800,
           ),
         ),
@@ -292,7 +319,7 @@ class FooterSection extends StatelessWidget {
             "Download App",
             style: GoogleFonts.poppins(
               color: Colors.white,
-              fontSize: isMobile ? 40.sp : 22.sp,
+              fontSize: isMobile ? 50.sp : 22.sp,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -310,7 +337,7 @@ class FooterSection extends StatelessWidget {
           title,
           style: GoogleFonts.poppins(
             color: Colors.white,
-            fontSize: isMobile ? 40.sp : 22.sp,
+            fontSize: isMobile ? 50.sp : 22.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
