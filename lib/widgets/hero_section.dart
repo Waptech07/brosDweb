@@ -72,7 +72,7 @@ class HeroSection extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.h),
-                GestureDetector(
+                InkWell(
                   onTap: () {},
                   child: Container(
                     padding: EdgeInsets.only(

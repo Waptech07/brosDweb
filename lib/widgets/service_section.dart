@@ -20,7 +20,7 @@ class ServiceSection extends StatelessWidget {
       "rating": "4",
     },
     {
-      "title": "Unskilled Processes",
+      "title": "Unskilled Professions",
       "image": "assets/images/unskilled.png",
       "rating": "4",
     },
@@ -147,7 +147,7 @@ class ServiceSection extends StatelessWidget {
   Widget _buildTabletLayout(BuildContext context) {
     return Container(
       color: AppColors.background,
-      padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 40.h),
+      padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 40.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -193,7 +193,8 @@ class ServiceSection extends StatelessWidget {
   Widget _buildMobileLayout(BuildContext context) {
     return Container(
       color: AppColors.background,
-      padding: EdgeInsets.all(20.w),
+      padding:
+          EdgeInsets.only(top: 40.w, right: 40.w, bottom: 40.w, left: 20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -326,8 +327,8 @@ class ServiceSection extends StatelessWidget {
         ),
         // Rating Circle
         Positioned(
-          top: layout == 'desktop' ? -10.h : -20.h,
-          right: layout == 'desktop' ? -10.w : -20.w,
+          top: layout == 'desktop' ? -15.h : -20.h,
+          right: layout == 'desktop' ? 0.w : -20.w,
           child: CircleAvatar(
             radius: ratingCircleRadius,
             backgroundColor: AppColors.primaryGreen,

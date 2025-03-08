@@ -8,10 +8,10 @@ class ServiceDialog extends StatelessWidget {
   final List<Map<String, String>> subServices;
 
   const ServiceDialog({
-    Key? key,
     required this.title,
     required this.subServices,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,17 +52,21 @@ class ServiceDialog extends StatelessWidget {
                     Expanded(
                       child: subServices.isNotEmpty
                           ? GridView.builder(
+                              clipBehavior: Clip.none,
                               itemCount: subServices.length,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: isMobile ? 2 : 3,
-                                mainAxisSpacing: 20.h,
+                                mainAxisSpacing: isMobile ? 10.h : 20.h,
                                 crossAxisSpacing: 30.w,
                                 childAspectRatio: 0.7,
                               ),
                               itemBuilder: (context, index) {
                                 final subService = subServices[index];
-                                return _buildSubServiceCard(subService, isMobile);
+                                return _buildSubServiceCard(
+                                  subService,
+                                  isMobile,
+                                );
                               },
                             )
                           : Center(
@@ -99,7 +103,7 @@ class ServiceDialog extends StatelessWidget {
     );
   }
 
-  /// Builds each sub-service card in the grid.
+  // Builds each sub-service card in the grid.
   Widget _buildSubServiceCard(Map<String, String> subService, bool isMobile) {
     return Stack(
       clipBehavior: Clip.none,
@@ -140,8 +144,8 @@ class ServiceDialog extends StatelessWidget {
           ],
         ),
         Positioned(
-          top: isMobile ? -20.h : -10.h,
-          right: isMobile ? -20.w : -10.w,
+          top: isMobile ? -20.h : -15.h,
+          right: isMobile ? -20.w : -15.w,
           child: CircleAvatar(
             radius: isMobile ? 50.r : 38.r,
             backgroundColor: AppColors.primaryGreen,

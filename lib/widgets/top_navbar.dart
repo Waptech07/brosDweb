@@ -33,7 +33,7 @@ class TopNavbar extends StatelessWidget {
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          width: 677.w,
+          width: 667.w,
           height: 55.h,
           child: TextField(
             decoration: InputDecoration(
@@ -45,11 +45,11 @@ class TopNavbar extends StatelessWidget {
               enabled: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
-              border: OutlineInputBorder(
+              enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.62.r),
                 borderSide: BorderSide(
                   width: 0.84.w,
-                  color: const Color(0xFFC8C4C4),
+                  color: Color.fromARGB(167, 200, 196, 196),
                 ),
               ),
               focusedBorder: OutlineInputBorder(
@@ -60,7 +60,7 @@ class TopNavbar extends StatelessWidget {
                 ),
               ),
               filled: true,
-              fillColor: const Color(0xFFF1F1F1),
+              fillColor: AppColors.background,
             ),
           ),
         ),
@@ -164,11 +164,11 @@ class TopNavbar extends StatelessWidget {
               enabled: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
-              border: OutlineInputBorder(
+              enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.62.r),
                 borderSide: BorderSide(
                   width: 0.84.w,
-                  color: const Color(0xFFC8C4C4),
+                  color: Color.fromARGB(167, 200, 196, 196),
                 ),
               ),
               focusedBorder: OutlineInputBorder(
@@ -179,7 +179,7 @@ class TopNavbar extends StatelessWidget {
                 ),
               ),
               filled: true,
-              fillColor: const Color(0xFFF1F1F1),
+              fillColor: AppColors.background,
             ),
           ),
         ),
